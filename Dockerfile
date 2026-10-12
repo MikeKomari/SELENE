@@ -40,6 +40,14 @@ RUN install -m 0755 -d /etc/apt/keyrings \
     docker-compose-plugin \
     && rm -rf /var/lib/apt/lists/*
 
+# Helm
+RUN HELM_VERSION=v3.16.4 \
+    && curl -fsSL "https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz" \
+    | tar -xz -C /tmp \
+    && mv /tmp/linux-amd64/helm /usr/local/bin/helm \
+    && rm -rf /tmp/linux-amd64 \
+    && helm version --client
+
 WORKDIR /workspace
 
 CMD ["bash"]
